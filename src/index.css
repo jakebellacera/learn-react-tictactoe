@@ -49,6 +49,11 @@ ol, ul {
   margin-left: 20px;
 }
 
+.game-info-sort {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 @keyframes bounceIndicatorLeft {
   0% {
     transform: translateX(0);

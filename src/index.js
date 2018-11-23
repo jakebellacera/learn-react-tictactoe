@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+const SORT = {
+  ASC: "ASC",
+  DESC: "DESC"
+};
+
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -47,6 +52,7 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null)
       }],
+      sortHistory: SORT.ASC,
       stepNumber: 0,
       xIsNext: true
     }
@@ -88,13 +94,17 @@ class Game extends React.Component {
     return [col === 0 ? 3 : col, row];
   }
 
+  handleSortChange(event) {
+    this.setState({ sortHistory: event.target.value });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
     // Display history of moves
-    const moves = history.map((step, move) => {
+    let moves = history.map((step, move) => {
       const desc = move ?
         `Go to move #${move} (${move % 2 !== 0 ? 'X' : 'O'}: ${this.getSquareColRow(step.square + 1).join(',')})` :
         'Go to game start';
@@ -107,6 +117,10 @@ class Game extends React.Component {
         </li>
       );
     });
+
+    if (this.state.sortHistory === SORT.DESC) {
+      moves = moves.reverse();
+    }
 
     // Display the game status
     let status;
@@ -127,6 +141,16 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <div className="game-info-sort">
+            Sort history: 
+            <select
+              value={this.state.sortHistory}
+              onChange={(event) => this.handleSortChange(event)}
+            >
+              <option value={SORT.ASC}>ASC</option>
+              <option value={SORT.DESC}>DESC</option>
+            </select>
+          </div>
           <ol>{moves}</ol>
         </div>
       </div>
