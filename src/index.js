@@ -134,7 +134,8 @@ class Game extends React.Component {
   }
 
   nextMove() {
-    return this.state.xIsNext? 'X' : 'O';
+    const canMove = this.state.history[this.state.stepNumber].squares.includes(null);
+    return canMove ? this.state.xIsNext? 'X' : 'O' : false;
   }
 
   jumpTo(step) {
@@ -154,8 +155,10 @@ class Game extends React.Component {
 
     if (winner) {
       status = 'Winner: ' + winner;
-    } else {
+    } else if (this.nextMove()) {
       status = `Next player: ${this.nextMove()}`;
+    } else {
+      status = 'Draw! No more moves.';
     }
 
     return (
