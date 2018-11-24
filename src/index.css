@@ -49,7 +49,7 @@ ol, ul {
   margin-left: 20px;
 }
 
-.game-info-sort {
+.history-sort {
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -68,11 +68,11 @@ ol, ul {
   }
 }
 
-.game-info .current {
+.history .current {
   position: relative;
 }
 
-.game-info .current::before {
+.history .current::before {
   content: " ";
   display: block;
   width: 0;
