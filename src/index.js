@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import cn from "classnames";
 import './index.css';
 
 function Square(props) {
@@ -71,10 +72,15 @@ class History extends React.Component {
       const desc = move ?
         `Go to move #${move} (${move % 2 !== 0 ? 'X' : 'O'}: ${this.getSquareColRow(step.square + 1).join(',')})` :
         'Go to game start';
+
+      const classNames = cn({
+        current: move === this.props.currentStep
+      });
+
       return (
         <li
           key={move}
-          className={move === this.props.currentStep ? 'current' : null}
+          className={classNames}
         >
           <button onClick={() => this.props.onHistoryChange(move)}>{desc}</button>
         </li>
