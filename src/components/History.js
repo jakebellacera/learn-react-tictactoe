@@ -1,30 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SORT_ORDERS } from "../lib/constants";
 import cn from 'classnames';
 
-const SORT_ORDERS = {
-  ASC: "ASC",
-  DESC: "DESC"
-};
-
 class History extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sortOrder: SORT_ORDERS.ASC
-    }
-  }
-
   // Returns the col / row for a square
   getSquareColRow(i) {
     const col = i % 3;
     const row = Math.ceil(i / 3);
     return [col === 0 ? 3 : col, row];
-  }
-
-  handleSortChange(event) {
-    this.setState({ sortOrder: event.target.value });
   }
 
   render() {
@@ -42,12 +26,12 @@ class History extends React.PureComponent {
           key={move}
           className={classNames}
         >
-          <button onClick={() => this.props.onHistoryChange(move)}>{desc}</button>
+          <button onClick={() => this.props.onMoveChange(move)}>{desc}</button>
         </li>
       );
     });
 
-    if (this.state.sortOrder === SORT_ORDERS.DESC) {
+    if (this.props.sortOrder === SORT_ORDERS.DESC) {
       moves = moves.reverse();
     }
 
@@ -56,8 +40,8 @@ class History extends React.PureComponent {
         <div className="history-sort">
           Sort history: 
           <select
-            value={this.state.sortHistory}
-            onChange={(event) => this.handleSortChange(event)}
+            value={this.props.sortOrder}
+            onChange={(event) => this.props.onSortOrderChange(event.target.value)}
           >
             <option value={SORT_ORDERS.ASC}>ASC</option>
             <option value={SORT_ORDERS.DESC}>DESC</option>
@@ -72,7 +56,9 @@ class History extends React.PureComponent {
 History.propTypes = {
   currentStep: PropTypes.number.isRequired,
   moves: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onHistoryChange: PropTypes.func.isRequired
+  sortOrder: PropTypes.oneOf(Object.values(SORT_ORDERS)).isRequired,
+  onSortOrderChange: PropTypes.func,
+  onMoveChange: PropTypes.func
 };
 
 export default History;

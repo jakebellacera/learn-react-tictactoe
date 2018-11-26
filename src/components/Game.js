@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './Board';
+import { SORT_ORDERS } from "../lib/constants";
 import History from './History';
 
 class Game extends React.PureComponent {
@@ -10,7 +11,8 @@ class Game extends React.PureComponent {
         squares: Array(9).fill(null)
       }],
       stepNumber: 0,
-      xIsNext: true
+      xIsNext: true,
+      historySortOrder: SORT_ORDERS.ASC
     }
   }
 
@@ -44,6 +46,12 @@ class Game extends React.PureComponent {
     });
   }
 
+  updateSortOrder(order) {
+    this.setState({
+      historySortOrder: order
+    });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -74,7 +82,9 @@ class Game extends React.PureComponent {
           <History
             moves={history}
             currentStep={this.state.stepNumber}
-            onHistoryChange={(move) => this.jumpTo(move)}
+            sortOrder={this.state.historySortOrder}
+            onSortOrderChange={(order) => this.updateSortOrder(order)}
+            onMoveChange={(move) => this.jumpTo(move)}
           />
         </div>
       </div>
