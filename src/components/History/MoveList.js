@@ -6,7 +6,7 @@ import cn from 'classnames';
 const MoveList = ({moves, currentStep, onMoveChange, sortOrder}) => {
   let moveList = moves.map((step, move) => {
     const desc = move ?
-      `Go to move #${move} (${move % 2 !== 0 ? 'X' : 'O'}: ${getSquareColRow(step.square + 1).join(',')})` :
+      `Go to move #${move} (${step.squares[step.square]}: ${getSquareColRow(step.square + 1).join(',')})` :
       'Go to game start';
 
     return (
