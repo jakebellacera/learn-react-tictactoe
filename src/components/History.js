@@ -2,18 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+const SORT_ORDERS = {
+  ASC: "ASC",
+  DESC: "DESC"
+};
+
 class History extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // set class constant to symbolize possible sort orders
-    this.SORT = {
-      ASC: "ASC",
-      DESC: "DESC"
-    };
-
     this.state = {
-      sortOrder: this.SORT.ASC
+      sortOrder: SORT_ORDERS.ASC
     }
   }
 
@@ -48,7 +47,7 @@ class History extends React.PureComponent {
       );
     });
 
-    if (this.state.sortOrder === this.SORT.DESC) {
+    if (this.state.sortOrder === SORT_ORDERS.DESC) {
       moves = moves.reverse();
     }
 
@@ -60,8 +59,8 @@ class History extends React.PureComponent {
             value={this.state.sortHistory}
             onChange={(event) => this.handleSortChange(event)}
           >
-            <option value={this.SORT.ASC}>ASC</option>
-            <option value={this.SORT.DESC}>DESC</option>
+            <option value={SORT_ORDERS.ASC}>ASC</option>
+            <option value={SORT_ORDERS.DESC}>DESC</option>
           </select>
         </div>
         <ol className="history-moves">{moves}</ol>
