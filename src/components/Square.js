@@ -12,9 +12,9 @@ const Square = ({ value, winner, onClick }) => (
 );
 
 Square.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   winner: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 };
 
-export default React.memo(Square);
+export default Square;

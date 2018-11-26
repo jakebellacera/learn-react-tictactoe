@@ -1,42 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { count } from '../lib/helpers';
 import Square from './Square';
 
-class Board extends React.PureComponent {
-  renderSquare(i) {
-    return (
-      <Square
-        key={i}
-        value={this.props.squares[i]}
-        winner={this.props.winningLine.includes(i)}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
+const NUM_ROWS = 3;
+const NUM_COLS = 3;
 
-  renderRow(row) {
-    const cols = [...Array(3).keys()];
-    return (
+const Board = ({move, currentMove, winningLine, onSquareClick}) => (
+  <div className="game-board">
+    {count(NUM_ROWS).map((row) => (
       <div key={row} className="board-row">
-        {cols.map((col) => this.renderSquare((row * cols.length) + col))}
-      </div>
-    );
-  }
+        {count(NUM_COLS).map(col => {
+          const square = (row * NUM_COLS) + col;
 
-  render() {
-    const rows = [...Array(this.props.squares.length / 3).keys()];
-    return (
-      <div>
-        {rows.map((row) => this.renderRow(row))}
+          return (
+            <Square
+              key={square}
+              value={move.squares[square]}
+              winner={winningLine.includes(square)}
+              onClick={(winningLine.length || move.squares[square]) ? null : (() => onSquareClick(square, currentMove + 1))}
+            />
+          );
+        })}
       </div>
-    );
-  }
-}
+    ))}
+  </div>
+);
 
 Board.propTypes = {
-  squares: PropTypes.arrayOf(PropTypes.string).isRequired,
+  move: PropTypes.object.isRequired,
+  currentMove: PropTypes.number.isRequired,
   winningLine: PropTypes.arrayOf(PropTypes.number).isRequired,
-  onClick: PropTypes.func.isRequired
+  onSquareClick: PropTypes.func.isRequired
 };
 
 export default Board;
