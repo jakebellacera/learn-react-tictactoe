@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SORT_ORDERS } from "../lib/constants";
-import MoveList from "./History/MoveList";
+import HistoryList from "./HistoryList";
 
 const History = ({moves, currentStep, sortOrder, onSortOrderChange, onMoveChange}) => (
   <div className="history">
@@ -15,7 +15,7 @@ const History = ({moves, currentStep, sortOrder, onSortOrderChange, onMoveChange
         <option value={SORT_ORDERS.DESC}>DESC</option>
       </select>
     </div>
-    <MoveList
+    <HistoryList
       moves={moves}
       sortOrder={sortOrder}
       currentStep={currentStep}

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SORT_ORDERS } from "../../lib/constants";
+import { SORT_ORDERS } from "../lib/constants";
 import cn from 'classnames';
 
-const MoveList = ({moves, currentStep, onMoveChange, sortOrder}) => {
-  let moveList = moves.map((step, move) => {
+const HistoryList = ({moves, currentStep, onMoveChange, sortOrder}) => {
+  let HistoryList = moves.map((step, move) => {
     const desc = move ?
       `Go to move #${move} (${step.squares[step.square]}: ${getSquareColRow(step.square + 1).join(',')})` :
       'Go to game start';
@@ -22,17 +22,17 @@ const MoveList = ({moves, currentStep, onMoveChange, sortOrder}) => {
   });
 
   if (sortOrder === SORT_ORDERS.DESC) {
-    moveList = moveList.reverse();
+    HistoryList = HistoryList.reverse();
   }
 
   return (
     <ol className="history-moves">
-      {moveList}
+      {HistoryList}
     </ol>
   );
 };
 
-MoveList.propTypes = {
+HistoryList.propTypes = {
   moves: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentStep: PropTypes.number.isRequired,
   onMoveChange: PropTypes.func,
@@ -45,4 +45,4 @@ const getSquareColRow = (i) => {
   return [col === 0 ? 3 : col, row];
 };
 
-export default MoveList;
+export default HistoryList;
