@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-export default function Square(props) {
+export default React.memo(function Square(props) {
   const classNames = cn({
     square: true,
     winner: props.winner
@@ -15,4 +15,4 @@ export default function Square(props) {
       {props.value}
     </button>
   );
-}
+});
