@@ -10,14 +10,14 @@ class Game extends React.PureComponent {
       moves: [{
         squares: Array(9).fill(null)
       }],
-      stepNumber: 0,
+      currentMove: 0,
       historySortOrder: SORT_ORDERS.ASC
     }
   }
 
   handleClick(i) {
-    const moves = this.state.moves.slice(0, this.state.stepNumber + 1);
-    const current = moves[this.state.stepNumber];
+    const moves = this.state.moves.slice(0, this.state.currentMove + 1);
+    const current = moves[this.state.currentMove];
     let squares = current.squares.slice();
     if (calculateWinner(squares).winner || squares[i]) {
       return;
@@ -28,18 +28,18 @@ class Game extends React.PureComponent {
         squares,
         square: i
       }]),
-      stepNumber: moves.length
+      currentMove: moves.length
     });
   }
 
   nextMove() {
-    const canMove = this.state.moves[this.state.stepNumber].squares.includes(null);
-    return canMove ? this.state.stepNumber % 2 === 0 ? 'X' : 'O' : false;
+    const canMove = this.state.moves[this.state.currentMove].squares.includes(null);
+    return canMove ? this.state.currentMove % 2 === 0 ? 'X' : 'O' : false;
   }
 
   jumpTo(step) {
     this.setState({
-      stepNumber: step
+      currentMove: step
     });
   }
 
@@ -51,7 +51,7 @@ class Game extends React.PureComponent {
 
   render() {
     const moves = this.state.moves;
-    const current = moves[this.state.stepNumber];
+    const current = moves[this.state.currentMove];
     const result = calculateWinner(current.squares);
 
     // Display the game status
@@ -78,7 +78,7 @@ class Game extends React.PureComponent {
           <div>{status}</div>
           <History
             moves={moves}
-            currentStep={this.state.stepNumber}
+            currentStep={this.state.currentMove}
             sortOrder={this.state.historySortOrder}
             onSortOrderChange={(order) => this.updateSortOrder(order)}
             onMoveChange={(move) => this.jumpTo(move)}
