@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-class History extends React.Component {
+class History extends React.PureComponent {
   constructor(props) {
     super(props);
 
