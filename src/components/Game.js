@@ -7,7 +7,7 @@ class Game extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      history: [{
+      moves: [{
         squares: Array(9).fill(null)
       }],
       stepNumber: 0,
@@ -16,24 +16,24 @@ class Game extends React.PureComponent {
   }
 
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
+    const moves = this.state.moves.slice(0, this.state.stepNumber + 1);
+    const current = moves[this.state.stepNumber];
     let squares = current.squares.slice();
     if (calculateWinner(squares).winner || squares[i]) {
       return;
     }
     squares[i] = this.nextMove();
     this.setState({
-      history: history.concat([{
+      moves: moves.concat([{
         squares,
         square: i
       }]),
-      stepNumber: history.length
+      stepNumber: moves.length
     });
   }
 
   nextMove() {
-    const canMove = this.state.history[this.state.stepNumber].squares.includes(null);
+    const canMove = this.state.moves[this.state.stepNumber].squares.includes(null);
     return canMove ? this.state.stepNumber % 2 === 0 ? 'X' : 'O' : false;
   }
 
@@ -50,8 +50,8 @@ class Game extends React.PureComponent {
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    const moves = this.state.moves;
+    const current = moves[this.state.stepNumber];
     const result = calculateWinner(current.squares);
 
     // Display the game status
@@ -77,7 +77,7 @@ class Game extends React.PureComponent {
         <div className="game-info">
           <div>{status}</div>
           <History
-            moves={history}
+            moves={moves}
             currentStep={this.state.stepNumber}
             sortOrder={this.state.historySortOrder}
             onSortOrderChange={(order) => this.updateSortOrder(order)}
