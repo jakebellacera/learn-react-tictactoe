@@ -1,18 +1,13 @@
 import React from 'react';
 import cn from 'classnames';
 
-export default React.memo(function Square(props) {
-  const classNames = cn({
-    square: true,
-    winner: props.winner
-  });
+const Square = ({ winner, value, onClick }) => (
+  <button
+    className={cn({square: true, winner})}
+    onClick={onClick}
+  >
+    {value}
+  </button>
+);
 
-  return (
-    <button
-      className={classNames}
-      onClick={props.onClick}
-    >
-      {props.value}
-    </button>
-  );
-});
+export default React.memo(Square);
