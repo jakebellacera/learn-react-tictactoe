@@ -11,7 +11,6 @@ class Game extends React.PureComponent {
         squares: Array(9).fill(null)
       }],
       stepNumber: 0,
-      xIsNext: true,
       historySortOrder: SORT_ORDERS.ASC
     }
   }
@@ -29,20 +28,18 @@ class Game extends React.PureComponent {
         squares,
         square: i
       }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext
+      stepNumber: history.length
     });
   }
 
   nextMove() {
     const canMove = this.state.history[this.state.stepNumber].squares.includes(null);
-    return canMove ? this.state.xIsNext? 'X' : 'O' : false;
+    return canMove ? this.state.stepNumber % 2 === 0 ? 'X' : 'O' : false;
   }
 
   jumpTo(step) {
     this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0
+      stepNumber: step
     });
   }
 
