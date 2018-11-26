@@ -2,7 +2,7 @@ import React from 'react';
 import Board from './Board';
 import History from './History';
 
-class Game extends React.Component {
+class Game extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
