@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 class History extends React.PureComponent {
@@ -68,5 +69,11 @@ class History extends React.PureComponent {
     );
   }
 }
+
+History.propTypes = {
+  currentStep: PropTypes.number.isRequired,
+  moves: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onHistoryChange: PropTypes.func.isRequired
+};
 
 export default History;
